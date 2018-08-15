@@ -1,0 +1,36 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+{% endblock %} 
+
+{% block content %}
+
+            <div class="details">
+                
+            <table class="table table-responsive" id ="myTable">
+    <thead>
+      <tr>
+          <th><h4>Template Set Name</h4></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if templateset_list %}
+        {% for templateset in templateset_list %}
+        <tr>
+        <td><a href= "{% url 'checkauth' %}template/{{templateset.id}}/ptsupdate/"><p>{{templateset.name}}</p></a></td>
+        <td><a href= "{% url 'checkauth' %}template/{{templateset.id}}/delete/" target="_blank"> <img src="{% static 'images/delete.png' %}"> </a></td>
+          </tr>
+        
+         {% endfor %}
+    {% endif %}
+    
+      </tbody>
+                </table>
+             
+                
+            </div>
+
+
+{% endblock %}

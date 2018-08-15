@@ -1,0 +1,40 @@
+{% extends 'base_user.html' %}
+
+{% block css %}
+    #content {margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20vh;
+        margin-bottom: 50px;
+            }
+
+    label {font-weight: bold;
+        padding: 10px;}
+
+    span.helptext {font-style: italic;
+        padding: 10px;
+        }
+    
+    input {margin-left: 10px}
+    
+    form {margin-top: 30px}
+
+    #subbut {margin-top:20px}
+
+    p {width: 70vw;}
+{% endblock %}
+
+{% block content %}
+<div id ="content">
+
+<h2>New Group </h2>
+    <hr>
+<form action="" method="POST">
+{% csrf_token %}
+Name: <input type="text" name="group1" /><br/>
+<br>
+<input id = "subbut" type="submit" value="Create" class="btn btn-secondary"/>
+    
+</form>
+</div>
+
+{% endblock %}

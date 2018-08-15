@@ -1,0 +1,31 @@
+
+{% extends 'base_user.html' %}
+
+{% block css %}
+    #content {margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20vh;
+        margin-bottom: 50px;
+            }
+{% endblock %}
+
+{% block content %}
+<div id ="content" >
+    <table class="table table-responsive table"  id ="myTable">
+<thead class="thead">  
+      <tr>
+        <th>Group Name</th>
+      </tr>
+    </thead>
+    <tbody id="myTable1">
+        {% for group in groups %}
+        <tr>
+        <td><a href = "{% url 'grouplist' %}{{group.id}}/update/"><p>{{group.name}}</p></a></td>
+        <td><a href = "{% url 'grouplist' %}{{group.id}}/delete/" class="btn btn-danger">Delete</a></td>
+        {% endfor %}
+    
+      </tbody>
+                </table>
+
+</div>
+{% endblock %}

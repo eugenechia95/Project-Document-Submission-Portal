@@ -1,0 +1,162 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+#header {
+    background-color: #337ab7;
+    color: white;
+    padding: 5px;
+    padding-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;;
+}
+
+#theprojects {
+    background-color: #299617;
+    padding-left: 30px;
+    color: white;
+}
+
+
+
+.pic {
+    float: right;
+    margin-right: 20px;
+}
+
+#upeven {
+    background-color: #805533;
+    padding-left: 30px;
+    color: white ;
+}
+
+#export {
+    background-color: #00468C;
+    padding-left: 30px;
+    color: white ;
+}
+
+.well {
+  display: inline-block;
+  width: 100%;
+  border-radius: 4px;
+  transition: all 0.5s;
+  text-align: center;
+  height: 150px;
+}
+
+.test {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.test::after {
+  content: '\00bb';
+  font-size: 80px;
+  position: absolute;
+  opacity: 0;
+  top: -15%;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.well:hover .test {
+  padding-right: 70px;
+}
+
+.well:hover .test::after {
+  opacity: 1;
+  right: 0;
+}
+
+.events {width: 50px;
+    margin-bottom: 10px;
+    margin-top: 4px
+}
+
+{% endblock %}  
+
+{% block content %}
+
+{% load static %}
+
+
+
+    
+ <div class="col-sm-9">
+      <div class="" id = "header">
+        <h4>Welcome to AMS Staff Portal, {{user.get_username}}</h4>
+        <p></p>
+      </div>
+</div>
+      
+        <div class="col-sm-4" >
+            <a href = "{% url 'project-list'%}" >        
+          <div class="well" id ="theprojects">
+              <div class ="test">
+              <img src="{% static 'images/building.png' %}">
+              <h4>Properties </h4>
+
+              </div>
+          </div>
+            </a>
+        </div>
+
+          
+        <div class="col-sm-4">
+          <a href = "{% url 'upcomingevents'%}" >
+            <div class="well" id ="upeven">
+                <div class ="test">
+            <img class = " events" src="{% static 'images/events.png' %}">           
+            <h4>Upcoming Events</h4>
+            
+                </div>
+          </div>
+            </a> 
+        </div>
+
+    
+        <div class="col-sm-4">
+          <a href = "{% url 'export_myproject'%}" >
+            <div class="well" id="export">
+                <div class ="test">
+            <img src="{% static 'images/cloud-computing.png' %}">  
+              <h4>Export Data</h4>
+          </div>
+              </div>
+            </a>  
+        </div>
+      
+        
+   
+        <div class="col-sm-4">
+          <div class="well">
+            <h4>Property Name</h4> 
+            <h4>text</h4>
+          </div>
+        </div>
+      
+        <div class="col-sm-4">
+          <div class="well">
+            <h4>Property Name</h4> 
+            <h4>text</h4>
+          </div>
+        </div>
+      
+        <div class="col-sm-4">
+          <div class="well">
+            <h4>Property Name</h4> 
+            <h4>text</h4>
+          </div>
+        </div>
+
+
+          
+
+
+
+
+{% endblock %}

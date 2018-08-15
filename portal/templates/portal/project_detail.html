@@ -1,0 +1,184 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+
+#left {
+    flex: 1;
+    }
+
+#right {
+    flex: 3;
+    border-left: 1px solid gray;
+    padding-left: 40px;
+    margin-left: 40px;
+    }
+
+#content {margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+        }
+#edbut {margin-top: 10px;
+    margin-bottom: 10px;}
+
+#tabledetail td {
+    vertical-align: middle;}
+{% endblock %} 
+
+{% block content %}
+
+
+<div id ="content">
+<div id ="left"><h2><strong>{{ project.project_name }}</strong> </h2>
+    {% if user.is_staff %}
+    <a href = "{{request.path}}/ptsupdate/"><button id = 'edbut' type="button" class="btn btn-success" >Edit</button></a>
+    {% endif %}
+<p><strong>Description:</strong> {{ project.project_description }}</p>
+<p><strong>Building Type:</strong> {{ project.buildingtype }}</p>
+<p><strong>Country:</strong> {{ project.country }}</p>
+<p><strong>City:</strong> {{ project.city }}</p>
+<p><strong>GFA:</strong> {{ project.GFA }}</p>
+<p><strong>Floors:</strong> {{ project.floors }}</p> 
+</div>   
+<div id ="right">
+<h3><strong>Status:</strong> 
+    {% if project.completion == True %}
+    Completed
+    {% elif project.IST == True %}
+    IST
+    {% elif project.pop_team == True %}
+    POP Team Formalised
+    {% elif project.construction == True %}
+    Ongoing Construction
+    {% elif project.design_drawing_approved == True %}
+    Design Drawing Approved
+    {% elif project.mockup_DAP == True %}
+    Mockup DAP
+    {% elif project.concept_DAP == True %}
+    Concept DAP
+    {% elif project.kickoff_meeting == True %}
+    Kickoff Meeting
+    {% endif %}
+    
+    </h3>
+    <hr>
+    <h4>Phase Details</h4>
+    
+    <table class="table" id ="tabledetail">
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>    
+    </thead>
+    <tbody>
+      <tr>
+        <td>Kick-off Meeting</td>
+        <td>{% if project.kickoff_meeting == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/kom/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/kom/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/kom/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>Concept DAP</td>
+        <td>{% if project.concept_DAP == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/cod/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/cod/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/cod/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>Mockup DAP</td>
+        <td>{% if project.mockup_DAP == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/mod/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/mod/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/mod/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>Design Drawing Approved</td>
+        <td>{% if project.design_drawing_approved == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/dda/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/dda/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/dda/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>Construction</td>
+        <td>{% if project.construction == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/con/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/con/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/con/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>POP Team Formalised</td>
+        <td>{% if project.pop_team == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/pop/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/pop/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/pop/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>IST</td>
+        <td>{% if project.IST == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/ist/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/ist/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/ist/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+      <tr>
+        <td>Completion</td>
+        <td>{% if project.completion == True %}
+            <span class="green-dot"></span>
+            {% else %}
+            <span class="red-dot"></span>
+            {% endif %}
+          </td>
+        <td><a href = " {{request.path}}/com/mne/ "><button type="button" class="btn btn-warning">M&E</button></a></td>
+        <td><a href = " {{request.path}}/com/idd/ "><button type="button" class="btn btn-info">Interior Design</button></a></td>
+        <td><a href = " {{request.path}}/com/arc/ "><button type="button" class="btn btn-primary">Architecture</button></a></td>
+      </tr>
+    </tbody>
+  </table>
+    
+</div>    
+</div>
+
+
+{% endblock %}

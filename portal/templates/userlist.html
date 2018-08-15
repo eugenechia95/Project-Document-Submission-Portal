@@ -1,0 +1,119 @@
+
+{% extends 'base_user.html' %}
+
+{% block css %}
+    #content {margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20vh;
+        margin-bottom: 50px;
+            }
+{% endblock %}
+
+{% block content %}
+<div id ="content" >
+<h2>User List</h2>
+    <hr>
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+     
+            <br>
+<p><button onclick="sortTable()" id ="sortbutton">Alphabetical Sort</button></p>
+    
+    <table class="table table-responsive table"  id ="myTable">
+<thead class="thead">  
+      <tr>
+        <th>User Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Staff Status</th>
+      </tr>
+    </thead>
+    <tbody id="myTable1">
+        {% if user.is_superuser %}
+        
+            {% for user in superlist %}
+            <tr>
+            <td><a href = "{% url 'userlist' %}{{user.id}}/edit/"><p>{{user.username}}</p></a></td>
+            <td><p>{{user.first_name}}</p></td>
+            <td><p>{{user.last_name}}</p></td>
+            <td>
+                {% if user.is_staff == True %}
+                <p>Staff</p>
+                {% else %}
+                <p>---</p>
+                {% endif %}
+                </td>
+            <td><a href = "{% url 'userlist' %}{{user.id}}/changepassword/" class="btn btn-warning">Change Password</a></td>
+            <td><a href = "{% url 'userlist' %}{{user.id}}/delete/" class="btn btn-danger">Delete User</a></td>
+            {% endfor %}
+        
+        {% elif user.is_staff %}
+            {% for user in userlist %}
+            <tr>
+            <td><a href = "{% url 'userlist' %}{{user.id}}/edit/"><p>{{user.username}}</p></a></td>
+            <td><p>{{user.first_name}}</p></td>
+            <td><p>{{user.last_name}}</p></td>
+            <td>
+                {% if user.is_staff == True %}
+                <p>Staff</p>
+                {% else %}
+                <p>---</p>
+                {% endif %}
+                </td>
+            <td><a href = "{% url 'userlist' %}{{user.id}}/changepasswordstaff/" class="btn btn-warning">Change Password</a></td>
+            <td><a href = "{% url 'userlist' %}{{user.id}}/deletestaff/" class="btn btn-danger">Delete User</a></td>
+            {% endfor %}
+        {% endif %}
+      </tbody>
+                </table>
+
+</div>
+
+<script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("P")[0];
+      y = rows[i + 1].getElementsByTagName("P")[0];
+      // Check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        // If so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+    
+</script>
+    
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable1 tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+{% endblock %}

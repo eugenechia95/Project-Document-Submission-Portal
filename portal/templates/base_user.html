@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    
+
+    <title>Ascott Management System</title>
+      <!-- Add additional CSS in static file -->
+
+        {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/tallogo.png' %}"/>  
+    <style>
+        
+        
+        .headerimg {
+            margin-top: 0px;
+            padding-top: 0px;
+            width: 35px;
+        }
+        
+        .navbar-brand {
+            padding-top: 10px}
+        
+        .details {
+            margin-left: 30px;
+            margin-top: 120px;
+        }
+        
+        #imgheader {width: 50px;}
+        
+        .navbar-brand {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-size: 1.2em;
+        }
+        
+    
+        
+        
+        li a:hover {
+            color: darkgray !important;}
+        
+        .red-dot:before {
+            content:"\25cf";
+            font-size: 3em;
+            color: red;
+            height: 10%;
+        }
+
+        .green-dot:before {
+            content:"\25cf";
+            font-size: 3em;
+            color: green;
+            height: 10%
+        }
+        
+
+        .nav-link {border-right: solid 1px grey}
+        
+        #logoutbut {
+            float: right;
+            margin-right: 20px;
+           }
+        
+        
+        
+        {% block css %}
+        {% endblock %}
+        
+  </style>
+  
+    
+  </head>
+    
+  <body>
+    
+<nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
+  <a class="navbar-brand" href="{% url 'allprojects' %}"><img id= "imgheader" src="{% static 'images/tallogo.svg' %}"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+    {% if user.is_staff %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'allprojects' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'project_create' %}">New Project</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Templates
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'template_create' %}">Create New</a>
+          <a class="dropdown-item" href="{% url 'templatelist' %}">Edit</a>
+        </div>
+      </li>
+        
+        
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          User Management
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'signup' %}">Add Users</a>
+          <a class="dropdown-item" href="{% url 'userlist' %}">Edit Users</a>
+          <a class="dropdown-item" href="{% url 'groupcreate' %}">Create Groups</a>
+          <a class="dropdown-item" href="{% url 'grouplist' %}">Edit Groups</a>
+        </div>
+      </li>
+ 
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Add Info
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'countrylist' %}">Country</a>
+          <a class="dropdown-item" href="{% url 'citylist' %}">City</a>
+        </div>
+      </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'completedprojects' %}">Completed Projects</a>
+      </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i>Logged in as: </i><u>{{request.user}}</u>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'userlist' %}{{request.user.id}}/changeownpassword/">Change Password</a>
+        </div>
+      </li>
+    {% else %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'users' %}">Home <span class="sr-only">(current)</span></a>
+      </li>  
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i>Logged in as: </i><u>{{request.user}}</u>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href="{% url 'userlist' %}{{request.user.id}}/changeownpassword/">Change Password</a>
+    </div>
+  </li>
+ 
+    {% endif %}
+    </ul>
+ 
+  </div>
+            <a href="{% url 'logout' %}"> <button type="button" class="btn btn-danger" id= "logoutbut" >Log Out</button></a>
+        
+         
+        
+</nav>
+      
+ 
+    {% block content %}
+      {% endblock %}
+        <br>
+        <br>
+  </body>
+</html>

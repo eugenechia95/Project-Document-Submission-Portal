@@ -1,0 +1,55 @@
+body {margin-top: 2%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    margin-bottom: 3%
+}
+
+h1 {
+    font-size: 1.2em;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.mid {
+    margin: 0 auto;
+    margin-top: 70px;
+    width: 500px;
+}
+
+.top {
+    margin: 0 auto;
+    width: 500px;
+}
+
+.welcome {
+    display: inline-block;
+}
+
+h1 {width: ;
+    font-family: trebuchet ms;
+    color: navy;
+    font-size: 1.5em;
+}
+
+hr {
+    border-top-width: 2px;
+}
+
+img {
+    width: 60px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+
+
+#logbut {background-color: navy;
+    color: white;
+    font-family: Calibri;
+    margin-top: 5%;
+    padding: 1%;
+    border-radius: 10px;
+}

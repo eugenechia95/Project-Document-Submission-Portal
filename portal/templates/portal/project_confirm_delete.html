@@ -1,0 +1,16 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+
+<div class ="details">
+<h2>Delete Project</h2>
+
+<p>Are you sure you want to delete the project: {{ project.project_name }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Yes, delete." />
+</form>
+</div>
+
+{% endblock %}

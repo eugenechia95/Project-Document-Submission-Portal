@@ -1,0 +1,32 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+
+#subbut {margin-top: 30px;}
+
+{% endblock %} 
+
+{% block content %}
+
+            <div class="details">
+
+<h2>Add New Template </h2>
+<hr>
+
+<form action="" method="POST">
+{% csrf_token %}
+  <select name="templateform">
+    {% for tsetinstance in tset %}
+    <option value= {{tsetinstance}} > {{tsetinstance.name}} </option>
+    {% endfor %}
+  </select>
+    <br>
+<input type="submit" value="Submit" class="btn btn-secondary" id = "subbut"/>
+    
+</form>
+    
+</div>
+
+
+{% endblock %}

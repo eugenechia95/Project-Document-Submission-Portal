@@ -1,0 +1,33 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+input#id_country {margin-left: 20px;}
+
+span.helptext {margin-left: 20px;
+        font-style: italic;}
+
+{% endblock %} 
+
+{% block content %}
+
+            <div class="details">
+
+<h2>Group Edit</h2>
+                <hr>
+                <br>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <br>
+    <input type="submit" value="Submit"  class="btn btn-secondary"/>
+
+    
+</form>
+
+</div>
+
+
+{% endblock %}

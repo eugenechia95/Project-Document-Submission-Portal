@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/homepage.css' %}">  
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+{% load static %}
+<div class ="top">
+<img id = "header" class = "welcome" src="{% static 'images/tallogo.png' %}" alt="The Ascott Limited">
+<h1 class = "welcome"><b>PROJECT DOCUMENT SUBMISSION PORTAL</b></h1>
+</div>
+
+<hr>
+
+<div class ="mid">
+<p>Welcome to <em>Project Documents Submission Portal</em></p>
+
+
+
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+
+<div>
+  <td>{{ form.username.label_tag }}</td>
+  <td>{{ form.username }}</td>
+</div>
+<div>
+  <td>{{ form.password.label_tag }}</td>
+  <td>{{ form.password }}</td>
+</div>
+
+<div>
+  <input id="logbut" type="submit" value="LOGIN" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</div>
+</form>
+
+</div>    
+
+{% endblock %}

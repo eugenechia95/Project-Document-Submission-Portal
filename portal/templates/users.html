@@ -1,0 +1,214 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+
+
+#fields {
+    text-align:center;
+
+    }
+
+#sortbutton {
+    color: white;
+    background-color:#616161;
+    border-radius: 5px;
+    }
+
+#myInput {
+    width: 70vw;
+}
+
+#myTable {
+    width: 93.5vw;
+    font-size: 13px;}
+
+#myTable p {margin: 0px !important;}
+
+.table td {padding: 0.5rem;}
+
+#myTable th {
+    vertical-align: middle;}
+
+#texting {
+    vertical-align: middle;}
+
+{% endblock %} 
+
+{% block content %}
+
+            <div class="details">
+            <h2>Project Summary</h2>
+            <br>
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+     
+            <br>
+<p><button onclick="sortTable()" id ="sortbutton">Alphabetical Sort</button></p>
+                
+            
+  <table class="table table-responsive table table-bordered"  id ="myTable" >
+    <thead class="thead-dark">  
+      <tr>
+        <th>Project</th>
+        <th>Country</th>
+        <th>City</th>
+        <th>Kickoff Meeting</th>
+        <th>Concept DAP</th>
+        <th>Mockup DAP</th>
+        <th>Design Drawing Approved</th>
+        <th>Construction</th>
+        <th>POP Team Formalised</th>
+        <th>Integrated System Test</th>
+        <th>Opening Date</th>
+        <th>Completed</th>
+      </tr>
+    </thead>
+    <tbody id="myTable1">
+    {% if finlist %}
+        {% for proj in finlist %}
+        <tr>
+        <td id="texting"><a href = " {{proj.get_absolute_url}} "><p>{{proj.project_name}}</p></a></td>
+        <td id="texting">{{proj.country}}</td>
+        <td id="texting">{{proj.city}}</td>
+        <td id="fields">
+            {% if proj.kickoff_meeting == True %}
+                <span class="green-dot"></span>
+            {% elif proj.kickoff_meeting == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            
+            {% if proj.kickoff_meeting_date%}
+                <p>{{proj.kickoff_meeting_date}}</p>
+            {% endif %}
+            </td>
+        <td id="fields">
+            {% if proj.concept_DAP == True %}
+                <span class="green-dot"></span>
+            {% elif proj.concept_DAP == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            
+            {% if proj.concept_DAP_date%}
+                <p>{{proj.concept_DAP_date}}</p>
+            {% endif %}
+            </td> 
+        <td id="fields">
+            {% if proj.mockup_DAP == True %}
+                <span class="green-dot"></span>
+            {% elif proj.mockup_DAP == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            {% if proj.mockup_DAP_date%}
+                <p>{{proj.mockup_DAP_date}}</p>
+            {% endif %}
+            </td>
+        <td id="fields">
+            {% if proj.design_drawing_approved == True %}
+                <span class="green-dot"></span>
+            {% elif proj.design_drawing_approved == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            </td>
+        <td id="fields">
+            {% if proj.construction == True %}
+                <span class="green-dot"></span>
+            {% elif proj.construction == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            
+            {% if proj.construction_date%}
+                <p>{{proj.construction_date}}</p>
+            {% endif %}
+            </td>
+        <td id="fields">
+            {% if proj.pop_team == True %}
+                <span class="green-dot"></span>
+            {% elif proj.pop_team == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            </td>
+        <td id="fields">
+            {% if proj.IST == True %}
+                <span class="green-dot"></span>
+            {% elif proj.IST == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            {% if proj.IST_date%}
+                <p>{{proj.IST_date}}</p>
+            {% endif %}
+            </td>
+        <td id="texting"> 
+            {% if proj.opening_date %}
+            {{proj.opening_date}}
+            {% endif %}
+        </td>
+        <td id="fields">
+            {% if proj.completion == True %}
+                <span class="green-dot"></span>
+            {% elif proj.completion == False %}
+                <span class="red-dot"></span>
+            {% endif %}
+            
+            {% if proj.completion_date%}
+                <p>{{proj.completion_date}}</p>
+            {% endif %}
+            </td>
+        </tr>
+         {% endfor %}
+    {% endif %}
+    
+      </tbody>
+                </table>
+                </div>
+
+
+<script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("P")[0];
+      y = rows[i + 1].getElementsByTagName("P")[0];
+      // Check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        // If so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+    
+</script>
+    
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable1 tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+{% endblock %}

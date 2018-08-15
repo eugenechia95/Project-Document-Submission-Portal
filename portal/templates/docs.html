@@ -1,0 +1,147 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+    #content {margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20vh;
+        margin-bottom: 50px;
+            }
+{% endblock %} 
+
+{% block content %}
+
+<div id ="content">
+
+
+<h3><strong>
+    {% if doccat == "mne" %}
+        M&E Documents
+    {% elif doccat == "idd" %}
+        Interior Design Documents
+    {% elif doccat == "arc" %}
+        Architecture Documents
+    {% endif %}
+    </strong> 
+    </h3>
+    <hr>
+    {% if user.is_staff %}
+    <a href= "{{ copy.get_absolute_url }}create/" target="_blank"><button type="button" class="btn btn-warning"> Add New Document</button></a>
+    <a href= "{{ copy.get_absolute_url }}addtemplate/" target="_blank"><button type="button" class="btn btn-info"> Add Template</button></a>
+    {% endif %}
+    <br>
+    <br>
+    <h4>Summary</h4>
+    
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Document</th>
+        {% if user.is_staff %}
+          <th></th>
+        {% endif %}
+        <th>Submission Status</th>
+        <th>Submitted by</th>
+        <th>Date of Submission</th>
+        <th>
+            Download
+        </th>
+        <th>Reviewed</th>
+        <th>Feedback</th>
+        <th></th>
+        <th></th>
+      </tr>    
+    </thead>
+    <tbody>
+      
+        {% for copy in final %}
+            <tr>
+            <td>{{copy.name}}
+                {%if copy.refdoc %}
+                <a href= "{{MEDIA_URL}}{{copy.refdoc}}" target="_blank"> <img src="{% static 'images/new-file.png' %}"> </a> 
+                {% endif %}
+                </td>
+            {% if user.is_staff %}
+                <td><a href= "{{ copy.get_absolute_url }}delete/" target="_blank"> <img src="{% static 'images/delete.png' %}"> </a></td>
+            {% endif %}
+            <td>
+            {% if copy.doc %}
+            Submitted
+
+            {% else %}
+            No Submission
+            {% endif %}
+            </td>
+            <td>
+                {% if copy.doc %}
+                {{copy.submitter}}
+                {% endif %}
+                </td>
+
+            <td>
+                {% if copy.doc %}
+                {{copy.dos}}
+                {% endif %}
+                </td>
+                <td> 
+                        {% if copy.doc %}
+                        <a href= "{{MEDIA_URL}}{{copy.doc}}" target="_blank"> <img src="{% static 'images/download.png' %}"> </a> 
+                        {% endif %}
+
+                </td>
+            <td>
+                {% if user.is_staff %}
+                    {{copy.reviewed_status}}
+                {% else %}
+                    {% if copy.doc %}
+                     {{copy.reviewed_status}}
+                    {% else %}
+                    {% endif %}
+                {% endif %}
+                </td>
+            <td>
+                {% if copy.feedback_document %}
+                <a href= "{{MEDIA_URL}}{{copy.feedback_document}}" target="_blank"> <button type="button" class="btn btn-warning"> Feedback</button> </a>
+                {% endif %}
+            </td>
+            <td> 
+                {% if user.is_staff %}
+                {% if copy.reviewed_status == "Pending" %}
+                    {% if copy.doc %}
+                    <a href= "{{ copy.get_absolute_url }}review/" target="_blank"><button type="button" class="btn btn-warning"> Review</button>
+                    {% endif %}
+                {% elif copy.reviewed_status == "Under Review" %}
+                    <a href= "{{ copy.get_absolute_url }}review/" target="_blank"><button type="button" class="btn btn-warning"> Review</button>
+                {% endif %}
+                </a>
+                {% else %}
+                    {% if copy.doc %}
+                        {% if copy.reviewed_status == "Pending" %}
+                            <a href= "{{ copy.get_absolute_url }}update/" target="_blank"><button type="button" class="btn btn-secondary">Re-upload</button>
+                        {% endif %}
+                    {% else %}
+                    <a href= "{{ copy.get_absolute_url }}update/" target="_blank"><button type="button" class="btn btn-info">Upload</button></a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if user.is_staff %}
+                {% else %}
+                    {% if copy.comment %}
+                    <a href= "{{ copy.get_absolute_url }}comment/" target="_blank"><button type="button" class="btn btn-warning">View Comment</button></a>
+                    {% endif %}
+                {% endif %}
+                </td>
+          </tr>
+    
+
+{% endfor %}  
+        
+
+        </tbody>
+    </table>
+    
+    
+</div>
+
+{% endblock %} 

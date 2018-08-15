@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>Update Document </title>
+</head>
+
+<body>
+<h1>Upload Document </h1>
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+Upload: <input type="file" name="file1" /><br/>
+<input type="submit" value="Post"/>
+    
+</form>
+    
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+    #content {margin-left: 40px;
+        margin-right: 40px;
+        margin-bottom: 50px;
+            }
+    label {font-weight: bold;
+        padding: 10px;}
+
+    span.helptext {font-style: italic;
+        padding: 10px;
+        }
+
+    p {width: 70vw;}
+{% endblock %} 
+
+{% block content %}
+
+
+
+            <div class="details">
+                <h2>Review Document: <i>{{documentinstance.name}}</i></h2>
+<hr>
+                <br>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit" class="btn btn-secondary"/>
+    
+</form>
+                
+</div>
+
+
+{% endblock %}

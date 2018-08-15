@@ -1,0 +1,36 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+{% endblock %} 
+
+{% block content %}
+
+            <div class="details">
+                
+            <table class="table table-responsive" id ="myTable">
+    <thead>
+      <tr>
+          <th><h4>Country</h4></th>
+          <th><a href= "{% url 'countrycreate' %}"><button type="button" class="btn btn-success">Add New</button></a></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if country_list %}
+        {% for country in country_list %}
+        <tr>
+        <td><a href= "{% url 'checkauth' %}countrylist/{{country.id}}/edit/"><p>{{country.country}}</p></a></td>
+        <td><a href= "{% url 'checkauth' %}countrylist/{{country.id}}/del/" target="_blank"> <img src="{% static 'images/delete.png' %}"> </a></td>
+          </tr>
+        
+         {% endfor %}
+    {% endif %}
+    
+      </tbody>
+                </table>
+             
+                
+            </div>
+
+
+{% endblock %}

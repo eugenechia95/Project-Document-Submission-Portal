@@ -1,0 +1,26 @@
+{% extends "base_user.html" %}
+
+{% load static %}
+{% block css %}
+{% endblock %} 
+
+{% block content %}
+
+            <div class="details">
+<h1>Create Document </h1>
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<table>
+<tbody>
+    <tr><td>Name: <input type="text" name ="name" /></td></tr>
+    <tr><td>Upload Reference Document (If Applicable): <input type="file" name="file1" /></td></tr>
+</tbody>
+</table>
+<input type="submit" value="Submit"  class="btn btn-secondary"/>
+    
+</form>
+
+</div>
+
+
+{% endblock %}

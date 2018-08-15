@@ -1,0 +1,29 @@
+{% extends 'base_user.html' %}
+
+{% block css %}
+    #content {margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20vh;
+        margin-bottom: 50px;
+            }
+
+    label {font-weight: bold;
+        padding: 10px;}
+
+    span.helptext {font-style: italic;
+        padding: 10px;
+        }
+
+    p {width: 70vw;}
+{% endblock %}
+
+{% block content %}
+<div id ="content">
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary">Sign up</button >
+  </form>
+</div>
+{% endblock %}

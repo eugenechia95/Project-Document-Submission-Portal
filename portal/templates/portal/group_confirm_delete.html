@@ -1,0 +1,16 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+
+<div class ="details">
+<h2>Delete Group</h2>
+
+<p>Are you sure you want to delete the group: {{ group.name }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+    <input type="submit" action="" value="Yes, delete." class="btn btn-secondary"/>
+</form>
+</div>
+
+{% endblock %}
