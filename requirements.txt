@@ -38,6 +38,7 @@ datashape==0.5.4
 decorator==4.3.0
 distributed==1.21.8
 dj-database-url==0.5.0
+Django==2.0
 docutils==0.14
 entrypoints==0.2.3
 et-xmlfile==1.0.1
