@@ -43,6 +43,10 @@ urlpatterns += [
     path('userlist/<int:pk>/changeownpassword/', views.change_ownpassword, name='pw_ownchange'),    
 ]
 
+urlpatterns += [
+    path('success/', views.success, name='success'),    
+]
+
 urlpatterns += [ 
     path('groupcreate/', views.groupcreate, name='groupcreate'), 
     path('grouplist/', views.grouplist, name='grouplist'),

@@ -14,6 +14,7 @@
 <div id ="content">
 
 
+
 <h3><strong>
     {% if doccat == "mne" %}
         M&E Documents
@@ -32,8 +33,10 @@
     <br>
     <br>
     <h4>Summary</h4>
+
+      <input class="form-control" id="myInput" type="text" placeholder="Search..">
     
-    <table class="table">
+    <table class="table" id ="myTable">
     <thead>
       <tr>
         <th>Document</th>
@@ -52,7 +55,7 @@
         <th></th>
       </tr>    
     </thead>
-    <tbody>
+    <tbody id = "myTable1">
       
         {% for copy in final %}
             <tr>
@@ -143,5 +146,16 @@
     
     
 </div>
+    
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 
 {% endblock %} 
