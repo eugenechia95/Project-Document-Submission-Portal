@@ -18,7 +18,7 @@
 {% csrf_token %}
   <select name="templateform">
     {% for tsetinstance in tset %}
-    <option value= {{tsetinstance.name}} > {{tsetinstance.name}} </option>
+    <option value= "{{tsetinstance.name}}" > {{tsetinstance.name}} </option>
     {% endfor %}
   </select>
     <br>
