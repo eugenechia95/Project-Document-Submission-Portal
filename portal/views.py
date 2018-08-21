@@ -21,6 +21,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm, PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
+import csv
+from django.http import HttpResponse
 
 @login_required
 def checkauth(request):
@@ -275,7 +277,7 @@ def documentupdate(request,pk):
         else:
             return render(request,'updatedoc.html',)
 
-@staff_member_required        
+@login_required       
 def documentcomment(request,pk):
         post=Documentinstance.objects.filter(id=pk)[0]
         comments = post.comment
@@ -650,6 +652,112 @@ class CityListView(StaffuserRequiredMixin,generic.ListView):
 class CityDelete(StaffuserRequiredMixin, DeleteView):
     model = City
     success_url = reverse_lazy('citylist')
+
+@staff_member_required    
+def export(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="projects.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Project','Country','City','Kickoff Meeting', 'Date',
+                               'Concept DAP', 'Date', 'Mockup DAP', 'Date','Design Drawing Approved', 'Construction','Date', 'POP Team Formalised','Date','IST',
+                               'Date', 'Completed','Date', 'Opening Date', 
+                               ])
+
+
+    projobjects = Project.objects.all().values_list('project_name','country','city','kickoff_meeting', 'kickoff_meeting_date',
+                                            'concept_DAP', 'concept_DAP_date',
+                                        'mockup_DAP','mockup_DAP_date',
+                                         'design_drawing_approved', 
+                                        'construction', 'construction_date', 'pop_team', 'pop_team_date',
+                                        'IST', 'IST_date', 'completion', 'completion_date',
+                                        'opening_date',
+                                        )
+    
+    countries = Country.objects.all().values_list('id','country',)
+    citylist = City.objects.all().values_list('id','city',)
+    
+    for proj in projobjects:
+        if proj[16] == False:
+            for countobj in countries:
+                if proj[1] == countobj[0]:
+                    projlist = list(proj)
+                    projlist.pop(1)
+                    countobjlist = list(countobj)
+                    projlist.insert(1, countobjlist[1])
+                    proj = tuple(projlist)
+                    for cityobj in citylist:
+                        if proj[2] == cityobj[0]:
+                            projlist = list(proj)
+                            projlist.pop(2)
+                            cityobjlist = list(cityobj)
+                            projlist.insert(2,cityobjlist[1])
+                            itr = 0
+                            while itr < len(projlist):
+                                if projlist[itr] == True:
+                                    projlist[itr] = "YES"
+                                    itr += 1
+                                elif projlist[itr] == False:
+                                    projlist[itr] = "NO"
+                                    itr += 1
+                                else:
+                                    itr += 1
+                            proj = tuple(projlist)
+                            writer.writerow(proj)
+    return response
+
+@staff_member_required    
+def comexport(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="projects.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Project','Country','City','Kickoff Meeting', 'Date',
+                               'Concept DAP', 'Date', 'Mockup DAP', 'Date','Design Drawing Approved', 'Construction','Date', 'POP Team Formalised','Date','IST',
+                               'Date', 'Completed','Date', 'Opening Date', 
+                               ])
+
+
+    projobjects = Project.objects.all().values_list('project_name','country','city','kickoff_meeting', 'kickoff_meeting_date',
+                                            'concept_DAP', 'concept_DAP_date',
+                                        'mockup_DAP','mockup_DAP_date',
+                                         'design_drawing_approved', 
+                                        'construction', 'construction_date', 'pop_team', 'pop_team_date',
+                                        'IST', 'IST_date', 'completion', 'completion_date',
+                                        'opening_date',
+                                        )
+    
+    countries = Country.objects.all().values_list('id','country',)
+    citylist = City.objects.all().values_list('id','city',)
+    
+    for proj in projobjects:
+        if proj[16] == True:
+            for countobj in countries:
+                if proj[1] == countobj[0]:
+                    projlist = list(proj)
+                    projlist.pop(1)
+                    countobjlist = list(countobj)
+                    projlist.insert(1, countobjlist[1])
+                    proj = tuple(projlist)
+                    for cityobj in citylist:
+                        if proj[2] == cityobj[0]:
+                            projlist = list(proj)
+                            projlist.pop(2)
+                            cityobjlist = list(cityobj)
+                            projlist.insert(2,cityobjlist[1])
+                            itr = 0
+                            while itr < len(projlist):
+                                if projlist[itr] == True:
+                                    projlist[itr] = "YES"
+                                    itr += 1
+                                elif projlist[itr] == False:
+                                    projlist[itr] = "NO"
+                                    itr += 1
+                                else:
+                                    itr += 1
+                            proj = tuple(projlist)
+                            writer.writerow(proj)
+    return response
 
 def test(request):
 
