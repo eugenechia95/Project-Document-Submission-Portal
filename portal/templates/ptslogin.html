@@ -33,19 +33,32 @@
 #texting {
     vertical-align: middle;}
 
+#psum {
+    float: right;
+    margin-right: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+
+
 
 {% endblock %} 
 
 {% block content %}
 
             <div class="details">
-            <h2>Project Summary</h2>
+            
+                <h2>Project Summary </h2>
+                
             <br>
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
      
             <br>
-<p><button onclick="sortTable()" id ="sortbutton">Alphabetical Sort</button></p>
-                
+
+<p><button onclick="sortTable()" id ="sortbutton">Alphabetical Sort</button> <a href = "{% url 'export' %}" class="btn btn-info" id = "psum">EXPORT</a> </p>
+
+           
             
   <table class="table table-responsive table table-bordered"  id ="myTable" >
     <thead class="thead-dark">  
