@@ -18,6 +18,11 @@ urlpatterns += [
     path('users/', views.users, name='users'), 
     ]
 
+urlpatterns += [ 
+    path('exporting/', views.export, name='export'), 
+    path('comexporting/', views.comexport, name='comexport'), 
+    ]
+
 urlpatterns += [
     path('countrylist/', views.CountryListView.as_view(), name='countrylist'),
     path('countrylist/create/', views.CountryCreate.as_view(), name='countrycreate'),
